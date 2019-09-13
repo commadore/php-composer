@@ -1,0 +1,36 @@
+Host *
+    IdentityFile ~/.ssh/id_rsa
+    #AddKeysToAgent yes
+# live bastion
+Host 52.164.186.185
+  IdentityFile ~/.ssh/id_rsa
+# live hosts
+Host r9-live-*
+  IdentityFile ~/.ssh/id_rsa
+  ProxyCommand ssh skylab@52.164.186.185 -q -W %h:%p
+# prod bastion
+Host 13.79.172.13
+  IdentityFile ~/.ssh/id_rsa
+# prod hosts
+Host r9-prod-*
+  IdentityFile ~/.ssh/id_rsa
+  ProxyCommand ssh r9admin@13.79.172.13 -W %h:%p
+# build hosts
+Host build-*
+  IdentityFile ~/.ssh/id_rsa
+  ProxyCommand ssh r9admin@13.79.172.13 -W %h:%p
+# test bastion
+Host 13.94.98.114
+
+  IdentityFile ~/.ssh/id_rsa
+# test hosts
+Host r9-test-*
+	IdentityFile ~/.ssh/id_rsa
+  	ProxyCommand ssh skylab@13.94.98.114 -q -W %h:%p
+
+Host 40.127.171.4
+	IdentityFile ~/.ssh/id_rsa
+# staging hosts
+	Host r9-stage-*
+	IdentityFile ~/.ssh/id_rsa
+	ProxyCommand ssh skylab@40.127.171.4 -q -W %h:%p
